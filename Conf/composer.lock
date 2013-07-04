@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "47831746d551a136396d279296782517",
+    "hash": "15bbae8c1509d6ad1329011e20f1e566",
     "packages": [
         {
             "name": "symfony/console",
@@ -143,22 +143,26 @@
             "time": "2013-05-01 21:53:03"
         },
         {
-            "name": "zendframework/zend-version",
+            "name": "zendframework/zend-stdlib",
             "version": "2.2.1",
-            "target-dir": "Zend/Version",
+            "target-dir": "Zend/Stdlib",
             "source": {
                 "type": "git",
-                "url": "https://github.com/zendframework/Component_ZendVersion.git",
+                "url": "https://github.com/zendframework/Component_ZendStdlib.git",
                 "reference": "release-2.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendVersion/zipball/release-2.2.1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendStdlib/zipball/release-2.2.1",
                 "reference": "release-2.2.1",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
+            },
+            "suggest": {
+                "zendframework/zend-eventmanager": "To support aggregate hydrator usage",
+                "zendframework/zend-servicemanager": "To support hydrator plugin manager usage"
             },
             "type": "library",
             "extra": {
@@ -169,7 +173,7 @@
             },
             "autoload": {
                 "psr-0": {
-                    "Zend\\Version\\": ""
+                    "Zend\\Stdlib\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -177,10 +181,10 @@
                 "BSD-3-Clause"
             ],
             "keywords": [
-                "version",
+                "stdlib",
                 "zf2"
             ],
-            "time": "2013-06-12 20:20:00"
+            "time": "2013-06-12 19:46:58"
         }
     ],
     "packages-dev": [

@@ -6,7 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir).'/Conf';
 
 return array(
-    'Zend\\Version\\' => array($vendorDir . '/zendframework/zend-version'),
+    'Zend\\Stdlib\\' => array($vendorDir . '/zendframework/zend-stdlib'),
     'Zend\\Escaper\\' => array($vendorDir . '/zendframework/zend-escaper'),
     'Zend\\Debug\\' => array($vendorDir . '/zendframework/zend-debug'),
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),

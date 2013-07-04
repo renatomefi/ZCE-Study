@@ -3,9 +3,9 @@
         "vendor-dir": "../Libs"
     },
     "require": {
-        "zendframework/zend-debug" : "*",
-        "zendframework/zend-escaper" : "*",
-        "zendframework/zend-version" : "*",
+        "zendframework/zend-stdlib" : "2.2.*",
+        "zendframework/zend-debug" : "2.2.*",
+        "zendframework/zend-escaper" : "2.2.*",
         "symfony/console": "2.3.*@dev"
     }
 }
