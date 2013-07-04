@@ -1,0 +1,11 @@
+{
+    "config": {
+        "vendor-dir": "../Libs"
+    },
+    "require": {
+        "zendframework/zend-debug" : "*",
+        "zendframework/zend-escaper" : "*",
+        "zendframework/zend-version" : "*",
+        "symfony/console": "2.3.*@dev"
+    }
+}

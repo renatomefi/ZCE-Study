@@ -1,0 +1,8 @@
+{
+    "config": {
+        "vendor-dir": "Libs"
+    },
+    "require": {
+        "zendframework/zend-debug" : "*"
+    }
+}
