@@ -52,7 +52,7 @@ class Cli extends Command
             $qNum = $dialog->ask($output, 'Please enter the question number: ');
         }
 
-        $text = "ZCE:$certsType Question number " . $qNum;
+        $text = "ZCE:$certsType Question number $qNum";
 
         $output->writeln("<info>$text</info>");
     }

@@ -11,7 +11,7 @@ class Certifications
     {
         $this->certs = array(
             'PHP5',
-            'ZF'
+            'ZF1'
         );
     }
 
