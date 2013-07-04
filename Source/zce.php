@@ -17,12 +17,14 @@ $loader->add('ZCE', SOURCE_PATH . '/Classes');
 use Symfony\Component\Console\Application;
 use ZCE\App\Project;
 use ZCE\App\Commands\ZCE;
+use ZCE\App\Commands\About;
 
 /**
  * Starting Symfony Console Application and Adding Commands
  */
-$app = new Application(Project::PROJECT, Project::VERSION);
+$app = new Application(Project::NAME, Project::VERSION);
 $app->add(new ZCE);
+$app->add(new About);
 $app->run();
 
 ?>
