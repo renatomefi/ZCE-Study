@@ -11,18 +11,14 @@
  * More information at: https://github.com/renatomefidf/ZCE-Study
  */
 
-namespace ZCE\App;
+namespace ZCE\Ceritications\Question;
 
 /**
- * Project's information
+ * Description of Example
  *
  * @author Renato Mendes Figueiredo <zce-project@renatomefi.com.br>
  */
-class Project
+abstract class ExampleAbstract
 {
-    const VERSION = '0.0.1';
-    
-    const NAME = 'ZCE Study Questions';
-    
-    const GITHUB = 'https://github.com/renatomefidf/ZCE-Study';
+    //put your code here
 }
