@@ -18,7 +18,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use ZCE\Certifications;
+use ZCE\App\Certifications;
 
 /**
  * CLI Command ZCE
@@ -29,6 +29,8 @@ class ZCE extends Command
 {
 
     /**
+     * Creating the command, later it will be added at Application
+     * 
      * @see Symfony\Component\Console\Command\Command::configure
      */
     protected function configure()
@@ -51,6 +53,8 @@ class ZCE extends Command
     }
 
     /**
+     * Executes certification questions
+     * 
      * @see Symfony\Component\Console\Command\Command::execute
      */
     protected function execute(InputInterface $input, OutputInterface $output)

@@ -11,7 +11,7 @@
  * More information at: https://github.com/renatomefidf/ZCE-Study
  */
 
-namespace ZCE;
+namespace ZCE\App;
 
 /**
  * Zend Certifications available in the project
@@ -41,8 +41,9 @@ class Certifications
     }
 
     /**
+     * Return certifications type
      * 
-     * @return type
+     * @return array
      */
     public function toArray()
     {
@@ -50,8 +51,9 @@ class Certifications
     }
 
     /**
+     * Prints certifications type in text mode
      * 
-     * @return type
+     * @return string
      */
     public function __toString()
     {

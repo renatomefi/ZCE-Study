@@ -58,12 +58,17 @@ abstract class QuestionAbstract
      */
     protected $see;
 
+    /**
+     * Return query text
+     * 
+     * @return string
+     */
     public function getQuery()
     {
         return $this->query;
     }
 
-    public function setQuery($query)
+    protected function setQuery($query)
     {
         $this->query = (string) $query;
     }
@@ -73,7 +78,7 @@ abstract class QuestionAbstract
         return $this->answer;
     }
 
-    public function setAnswer($answer)
+    protected function setAnswer($answer)
     {
         if (!is_array($answer))
             throw new \Exception(__NAMESPACE__ . __CLASS__ . ' must be aray.');
@@ -81,7 +86,7 @@ abstract class QuestionAbstract
         $this->answer = $answer;
     }
     
-    public function addAnswer(String $answer, $correct = null)
+    protected function addAnswer(String $answer, $correct = null)
     {
         if (is_null($correct) || !is_bool($correct))
             throw new \Exception(__NAMESPACE__ . __CLASS__ . __FUNCTION__ . '($correct) must be boolean');
@@ -94,7 +99,7 @@ abstract class QuestionAbstract
         return $this->explanation;
     }
 
-    public function setExplanation($explanation)
+    protected function setExplanation($explanation)
     {
         $this->explanation = $explanation;
     }
@@ -104,7 +109,7 @@ abstract class QuestionAbstract
         return $this->exampleClass;
     }
 
-    public function setExampleClass(Question\ExampleAbstract $exampleClass)
+    protected function setExampleClass(Question\ExampleAbstract $exampleClass)
     {
         $this->exampleClass = $exampleClass;
     }
@@ -114,7 +119,7 @@ abstract class QuestionAbstract
         return $this->see;
     }
 
-    public function setSee($see)
+    protected function setSee($see)
     {
         $this->see = $see;
     }

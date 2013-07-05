@@ -27,6 +27,8 @@ class About extends Command
 {
 
     /**
+     * Creating the command, later it will be added at Application
+     * 
      * @see Symfony\Component\Console\Command\Command::configure
      */
     protected function configure()
@@ -53,6 +55,8 @@ class About extends Command
     }
 
     /**
+     * Shows infos about the Project
+     * 
      * @see Symfony\Component\Console\Command\Command::execute
      */
     protected function execute(InputInterface $input, OutputInterface $output)
