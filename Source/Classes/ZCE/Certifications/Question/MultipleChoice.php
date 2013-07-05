@@ -22,5 +22,5 @@ use ZCE\Ceritications\QuestionAbstract;
  */
 class MultipleChoice extends QuestionAbstract
 {
-    //put your code here
+    
 }

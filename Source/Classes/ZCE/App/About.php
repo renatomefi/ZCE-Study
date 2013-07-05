@@ -56,7 +56,7 @@ class About
         $output->writeln('<info>You can access this via:</info> ' . Project::GITHUB);
         $output->writeln('<info>I\'ll be very happy if you wanna contribute with me!</info> <bg=blue;options=bold>Fork it</bg=blue;options=bold>');
     }
-    
+
     /**
      * Apeend to output informations
      * 
@@ -66,7 +66,7 @@ class About
     {
         $output->writeln('<info>With ZCE-Study you can asware tons of questions about Zend Certifications, including ZCE and ZF.</info>');
     }
-    
+
     /**
      * Apeend to output informations about usage in this project
      * 
@@ -82,5 +82,5 @@ class About
         $output->writeln('```');
         $output->writeln('2. <info>After use help option it will show you the usage manual.</info>');
     }
-    
+
 }

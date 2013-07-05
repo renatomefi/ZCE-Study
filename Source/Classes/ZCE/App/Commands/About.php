@@ -105,7 +105,6 @@ class About extends Command
             $aboutClass->usage($output);
             $output->writeln('');
         }
-
     }
 
 }

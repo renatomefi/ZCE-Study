@@ -27,14 +27,14 @@ class Certifications
      * 
      * @var array
      */
-    private $certs = array();
+    private $_certs = array();
 
     /**
      * Populate $certs
      */
     public function __construct()
     {
-        $this->certs = array(
+        $this->_certs = array(
             'PHP5',
             'ZF1'
         );
@@ -47,7 +47,7 @@ class Certifications
      */
     public function toArray()
     {
-        return (array) $this->certs;
+        return (array) $this->_certs;
     }
 
     /**
@@ -57,7 +57,7 @@ class Certifications
      */
     public function __toString()
     {
-        return '(' . implode(' | ', $this->certs) . ')';
+        return '(' . implode(' | ', $this->_certs) . ')';
     }
 
 }

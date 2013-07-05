@@ -1,6 +1,5 @@
 #!/usr/bin/env php
 <?php
-
 /*
  * This file is part of the ZCE Study
  *
@@ -13,12 +12,9 @@
  */
 
 // Define paths
-defined('CONF_PATH')
-    || define('CONF_PATH', realpath(dirname(__FILE__) . '/../Conf'));
-defined('SOURCE_PATH')
-    || define('SOURCE_PATH', realpath(dirname(__FILE__) . '/../Source'));
-defined('LIBS_PATH')
-    || define('LIBS_PATH', realpath(dirname(__FILE__) . '/../Libs'));
+defined('CONF_PATH') || define('CONF_PATH', realpath(dirname(__FILE__) . '/../Conf'));
+defined('SOURCE_PATH') || define('SOURCE_PATH', realpath(dirname(__FILE__) . '/../Source'));
+defined('LIBS_PATH') || define('LIBS_PATH', realpath(dirname(__FILE__) . '/../Libs'));
 
 /**
  * Start Composer Loader
@@ -38,5 +34,4 @@ $app = new Application(Project::NAME, Project::VERSION);
 $app->add(new ZCE);
 $app->add(new About);
 $app->run();
-
 ?>

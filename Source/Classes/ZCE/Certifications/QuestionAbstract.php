@@ -26,7 +26,7 @@ abstract class QuestionAbstract
      * 
      * @var string
      */
-    protected $query;
+    protected $_query;
 
     /**
      * Answer of the current question
@@ -34,21 +34,21 @@ abstract class QuestionAbstract
      * 
      * @var array|String
      */
-    protected $answer;
+    protected $_answer;
 
     /**
      * The reason of the answer
      * 
      * @var String 
      */
-    protected $explanation;
+    protected $_explanation;
 
     /**
      * If there is a class with example, put it here
      * 
      * @var ZCE\Ceritications\Question\ExampleAbstract
      */
-    protected $exampleClass;
+    protected $_exampleClass;
 
     /**
      * Put a link to documentation or another source that can solve
@@ -56,7 +56,7 @@ abstract class QuestionAbstract
      * 
      * @var String 
      */
-    protected $see;
+    protected $_see;
 
     /**
      * Return query text
@@ -65,63 +65,70 @@ abstract class QuestionAbstract
      */
     public function getQuery()
     {
-        return $this->query;
+        return $this->_query;
     }
 
+    /**
+     * 
+     * @param type $query
+     */
     protected function setQuery($query)
     {
-        $this->query = (string) $query;
+        $this->_query = (string) $query;
     }
 
     public function getAnswer()
     {
-        return $this->answer;
+        return $this->_answer;
     }
 
     protected function setAnswer($answer)
     {
         if (!is_array($answer))
             throw new \Exception(__NAMESPACE__ . __CLASS__ . ' must be aray.');
-        
-        $this->answer = $answer;
+
+        $this->_answer = $answer;
     }
-    
+
     protected function addAnswer(String $answer, $correct = null)
     {
         if (is_null($correct) || !is_bool($correct))
-            throw new \Exception(__NAMESPACE__ . __CLASS__ . __FUNCTION__ . '($correct) must be boolean');
-            
-        $this->answer[$answer] = $correct;
+            throw new \Exception(
+                __NAMESPACE__ . __CLASS__ . __FUNCTION__ .
+                '($correct) must be boolean'
+            );
+
+        $this->_answer[$answer] = $correct;
     }
 
     public function getExplanation()
     {
-        return $this->explanation;
+        return $this->_explanation;
     }
 
     protected function setExplanation($explanation)
     {
-        $this->explanation = $explanation;
+        $this->_explanation = $explanation;
     }
 
     public function getExampleClass()
     {
-        return $this->exampleClass;
+        return $this->_exampleClass;
     }
 
     protected function setExampleClass(Question\ExampleAbstract $exampleClass)
     {
-        $this->exampleClass = $exampleClass;
+        $this->_exampleClass = $exampleClass;
     }
 
     public function getSee()
     {
-        return $this->see;
+        return $this->_see;
     }
 
     protected function setSee($see)
     {
-        $this->see = $see;
+        $this->_see = $see;
     }
 
 }
