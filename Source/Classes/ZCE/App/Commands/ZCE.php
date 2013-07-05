@@ -41,15 +41,17 @@ class ZCE extends Command
                 ->setName('zce')
                 ->setDescription('ZCE PHP5.3 Questions')
                 ->addArgument(
-                        'certification', InputArgument::OPTIONAL, "Choose Certification $certs"
+                    'certification', InputArgument::OPTIONAL,
+                    "Choose Certification $certs"
                 )
                 ->addArgument(
-                        'question', InputArgument::OPTIONAL, 'Show selected question'
+                    'question', InputArgument::OPTIONAL,
+                    'Show selected question'
                 )
                 ->addOption(
-                        'list', 'l', InputOption::VALUE_NONE, 'Lists current Certification questions'
-                )
-        ;
+                    'list', 'l', InputOption::VALUE_NONE,
+                    'Lists current Certification questions'
+                );
     }
 
     /**
@@ -78,9 +80,18 @@ class ZCE extends Command
             $qNum = $dialog->ask($output, 'Please enter the question number: ');
         }
 
-        $text = "ZCE:$certsType Question number $qNum";
-
-        $output->writeln("<info>$text</info>");
+        define('phpQ', 'ZCE\\Certifications\\PHP5\\', TRUE);
+        $class = phpQ . "Q$qNum";
+        $qClass = new $class;
+        
+        $output->writeln("<info>ZCE:$certsType Question number $qNum</info>");
+        $output->writeln('<comment>' . $qClass->getQuery() . '</comment>');
+        
+        foreach ($qClass->getOptions() as $k => $v) {
+            $output->writeln('A) <info>' . $k . '</info>');
+        }
+        
+        
     }
 
 }

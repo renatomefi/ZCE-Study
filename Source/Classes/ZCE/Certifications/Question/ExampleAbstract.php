@@ -11,7 +11,7 @@
  * More information at: https://github.com/renatomefidf/ZCE-Study
  */
 
-namespace ZCE\Ceritications\Question;
+namespace ZCE\Certifications\Question;
 
 /**
  * Description of Example

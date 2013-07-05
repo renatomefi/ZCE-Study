@@ -11,7 +11,7 @@
  * More information at: https://github.com/renatomefidf/ZCE-Study
  */
 
-namespace ZCE\Ceritications;
+namespace ZCE\Certifications;
 
 /**
  * Question Abstract class
@@ -27,14 +27,6 @@ abstract class QuestionAbstract
      * @var string
      */
     protected $_query;
-
-    /**
-     * Answer of the current question
-     * It can be an array or an String
-     * 
-     * @var array|String
-     */
-    protected $_answer;
 
     /**
      * The reason of the answer
@@ -77,30 +69,6 @@ abstract class QuestionAbstract
         $this->_query = (string) $query;
     }
 
-    public function getAnswer()
-    {
-        return $this->_answer;
-    }
-
-    protected function setAnswer($answer)
-    {
-        if (!is_array($answer))
-            throw new \Exception(__NAMESPACE__ . __CLASS__ . ' must be aray.');
-
-        $this->_answer = $answer;
-    }
-
-    protected function addAnswer(String $answer, $correct = null)
-    {
-        if (is_null($correct) || !is_bool($correct))
-            throw new \Exception(
-                __NAMESPACE__ . __CLASS__ . __FUNCTION__ .
-                '($correct) must be boolean'
-            );
-
-        $this->_answer[$answer] = $correct;
-    }
-
     public function getExplanation()
     {
         return $this->_explanation;
@@ -131,4 +99,20 @@ abstract class QuestionAbstract
         $this->_see = $see;
     }
 
+    public function __construct()
+    {
+        $this->build();
+        $this->_buildValidate();
+    }
+    
+    private function _buildValidate()
+    {
+        if (is_null($this->getQuery()))
+            throw new \Exception('$query must be set');
+        
+    }
+    
+    abstract public function isValid();
+    
+    abstract protected function build();
 }
