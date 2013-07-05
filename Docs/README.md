@@ -1,7 +1,7 @@
 ZCE-Study is a study questions plataform for Zend Certifications
 ========================================
 
-With ZCE-Study you can asware tons of questions about Zend Certifications, including ZCE and ZF
+With ZCE-Study you can asware tons of questions about Zend Certifications, including ZCE and ZF.
 
 See [https://github.com/renatomefidf/ZCE-Study](https://github.com/renatomefidf/ZCE-Study) for more information
 
@@ -33,6 +33,11 @@ Authors
 Renato Mendes Figueiredo - <zce-project@renatomefi.com.br> - <http://br.linkedin.com/in/renatomefidf><br />
 
 See also the list of [contributors](https://github.com/renatomefidf/ZCE-Study/contributors) who participated in this project.
+
+Zend Certifications
+-------
+
+More about Zend Certifications at [http://www.zend.com/services/certification/](http://www.zend.com/services/certification/)
 
 License
 -------

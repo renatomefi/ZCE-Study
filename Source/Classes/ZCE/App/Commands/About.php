@@ -47,9 +47,6 @@ class About extends Command
                         'github', 'g', InputOption::VALUE_NONE, 'This project\'s GitHub'
                 )
                 ->addOption(
-                        'zend', 'z', InputOption::VALUE_NONE, 'Zend Certification'
-                )
-                ->addOption(
                         'usage', 'u', InputOption::VALUE_NONE, 'Script\'s usage'
                 )
         ;
@@ -69,13 +66,11 @@ class About extends Command
             $authors = true;
             $github = true;
             $info = true;
-            $zend = true;
             $usage = true;
         } else {
             $authors = $input->getOption('authors');
             $github = $input->getOption('github');
             $info = $input->getOption('info');
-            $zend = $input->getOption('zend');
             $usage = $input->getOption('usage');
         }
 
@@ -97,21 +92,16 @@ class About extends Command
 
         if (true === $info) {
             $output->writeln('<comment>Info</comment>');
-            $aboutClass->github($output);
+            $aboutClass->info($output);
             $output->writeln('');
         }
 
         if (true === $usage) {
             $output->writeln('<comment>Usage</comment>');
-            $aboutClass->github($output);
+            $aboutClass->usage($output);
             $output->writeln('');
         }
 
-        if (true === $zend) {
-            $output->writeln('<comment>Zend</comment>');
-            $aboutClass->github($output);
-            $output->writeln('');
-        }
     }
 
 }
