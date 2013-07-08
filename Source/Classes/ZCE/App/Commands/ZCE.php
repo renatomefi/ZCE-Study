@@ -77,7 +77,10 @@ class ZCE extends Command
         $certsType = $input->getArgument('certification');
         if (!$certsType || !in_array($certsType, $certs->toArray())) {
             $dialog = $this->getHelperSet()->get('dialog');
-            $certsType = $dialog->ask($output, "Please, choose a Certification type $certs: ", null, $certs->toArray());
+            $certsType = $dialog->ask(
+                $output, "Please, choose a Certification type $certs: ",
+                null, $certs->toArray()
+            );
         }
 
         if (!in_array($certsType, $certs->toArray())) {
@@ -116,7 +119,7 @@ class ZCE extends Command
         }
         
         if (is_object($qClass) && $qClass instanceof \ZCE\Certifications\QuestionAbstract) {
-            echo 'ok';
+            $this->_askQuestion($output, $qClass);
         } else {
             $output->writeln('<error>Invalid question number</error>');
             $this->_getQuestion($input, $output);
@@ -131,22 +134,33 @@ class ZCE extends Command
      * 
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    protected function _askQuestion(OutputInterface $output)
+    protected function _askQuestion(OutputInterface $output, \ZCE\Certifications\QuestionAbstract $question)
     {
+
+        $info = $question->getInfo($question);
+        $output->writeln(
+            '<info>ZCE ' . $info['certification'] . 
+            ' Question number ' . $info['question'] . '</info>'
+        );
         
+        $output->writeln('<comment>' . $question->getQuery() . '</comment>');
 
-        $output->writeln("<info>ZCE:$certsType Question number $qNum</info>");
-        $output->writeln('<comment>' . $qClass->getQuery() . '</comment>');
-
-        $letters = array_slice(range('A', 'Z'), 0, count($qClass->getOptions()));
+        // Associate letters and options keys, al   so shows it!
+        $letters = array_slice(range('A', 'Z'), 0, count($question->getOptions()));
+        $finalOptions = array();
         $i = 0;
-        foreach ($qClass->getOptions() as $k => $v) {
-            $output->writeln($letters[$i] . ') <info>' . $k . '</info>');
+        foreach ($question->getOptions() as $k => $v) {
+            $output->writeln($letters[$i] . ') <info>' . $v . '</info>');
+            $finalOptions[$letters[$i]] = $k;
             $i++;
         }
-
+        
         $dialog = $this->getHelperSet()->get('dialog');
-        $a = $dialog->ask($output, 'Answer: ');
+        $answer = $dialog->ask($output, 'Answer: ', null, $letters);
+        
+        $question->isValid($answer);
     }
+    
+
 
 }

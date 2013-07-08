@@ -112,7 +112,20 @@ abstract class QuestionAbstract
         
     }
     
-    abstract public function isValid();
+    public function getInfo($class)
+    {
+        $iArray = explode('\\', get_class($class));
+        
+        $info = array(
+            'info' => $iArray,
+            'question' => substr(array_pop($iArray), 1),
+            'certification' => array_pop($iArray)
+        );
+        
+        return $info;
+    }
+    
+    abstract public function isValid($answer);
     
     abstract protected function build();
 }

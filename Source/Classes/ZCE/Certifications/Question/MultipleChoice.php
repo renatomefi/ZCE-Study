@@ -31,13 +31,17 @@ abstract class MultipleChoice extends QuestionAbstract
     
     public function getOptions()
     {
-        return $this->_options;
+        $options = array();
+        foreach ($this->_options as $o) {
+            $options[] = $o['value'];
+        }
+        return $options;
     }
 
     protected function setOptions($options)
     {
         if (!is_array($options))
-            throw new \Exception('$options must be aray');
+            throw new \Exception('$options must be an aray');
         
         $this->_options = $options;
     }
@@ -47,8 +51,36 @@ abstract class MultipleChoice extends QuestionAbstract
         if (is_null($correct) || !is_bool($correct))
             throw new \Exception('$correct must be a boolean');
         
-        $this->_options[] = (string) $option;
+        $this->_options[] = array(
+            'value' => (string) $option, 'correct' => $correct
+        );
         
         return $this;
+    }
+    
+    public function _filterAnswer($a, Array $filter = array())
+    {
+        $aArray = str_split(strtoupper($a));
+        
+        $answer = array();
+        $invalid = array();
+        
+        foreach ($aArray as $v) {
+            if (ctype_alpha($v)) {
+                if (in_array($v, $filter) || empty($filter)) {
+                    $answer[] = $v;
+                } else {
+                    $invalid[] = $v;
+                }
+            }
+        }
+        
+        return array('valid' => $answer, 'invalid' => $invalid);
+    }
+    
+    public function isValid($answer)
+    {
+        \Zend\Debug\Debug::dump($this->_filterAnswer($answer, $this->getOptions()));
+        return true;
     }
 }

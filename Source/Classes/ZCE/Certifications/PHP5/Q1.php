@@ -34,9 +34,4 @@ class Q1 extends MultipleChoice
                 ->addOption('0', false);
     }
 
-    public function isValid()
-    {
-        return true;
-    }
-
 }
