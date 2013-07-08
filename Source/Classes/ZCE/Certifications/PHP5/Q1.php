@@ -30,7 +30,8 @@ class Q1 extends MultipleChoice
         $this
                 ->addOption('2', true)
                 ->addOption('3', false)
-                ->addOption('4', false);
+                ->addOption('4', false)
+                ->addOption('0', false);
     }
 
     public function isValid()

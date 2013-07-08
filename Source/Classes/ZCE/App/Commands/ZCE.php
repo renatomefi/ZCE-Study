@@ -41,57 +41,112 @@ class ZCE extends Command
                 ->setName('zce')
                 ->setDescription('ZCE PHP5.3 Questions')
                 ->addArgument(
-                    'certification', InputArgument::OPTIONAL,
-                    "Choose Certification $certs"
+                        'certification', InputArgument::OPTIONAL, "Choose Certification $certs"
                 )
                 ->addArgument(
-                    'question', InputArgument::OPTIONAL,
-                    'Show selected question'
+                        'question', InputArgument::OPTIONAL, 'Show selected question'
                 )
                 ->addOption(
-                    'list', 'l', InputOption::VALUE_NONE,
-                    'Lists current Certification questions'
-                );
+                        'list', 'l', InputOption::VALUE_NONE, 'Lists current Certification questions');
     }
 
     /**
-     * Executes certification questions
+     * Validate inputs
      * 
      * @see Symfony\Component\Console\Command\Command::execute
      */
     protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $cert = $this->_getCert($input, $output);
+
+        $question = $this->_getQuestion($input, $output);
+    }
+
+    /**
+     * Get Certification from input
+     * 
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return type
+     * @throws \Exception
+     */
+    protected function _getCert(InputInterface $input, OutputInterface $output)
     {
         $certs = new Certifications();
 
         $certsType = $input->getArgument('certification');
         if (!$certsType || !in_array($certsType, $certs->toArray())) {
             $dialog = $this->getHelperSet()->get('dialog');
-            $certsType = $dialog->ask($output, "Please, choose a Certification Type $certs: ", null, $certs->toArray());
+            $certsType = $dialog->ask($output, "Please, choose a Certification type $certs: ", null, $certs->toArray());
         }
 
-        if ($input->getOption('list')) {
-            $output->writeln("<comment>LISTA</comment>");
-            return;
-        }
+        if (!in_array($certsType, $certs->toArray())) {
+            $output->writeln('<error>Invalid certification type</error>');
+            $this->_getCert($input, $output);
+        } else {
 
+            /**
+             * @todo Build ZF1 Questions
+             */
+            if ($certsType == 'ZF1') {
+                throw new \Exception('ZF1 certification is under construction');
+            }
+
+            return $certsType;
+        }
+    }
+
+    protected function _getQuestion(InputInterface $input, OutputInterface $output)
+    {
+        $qCert = $input->getArgument('certification');
         $qNum = $input->getArgument('question');
+        
         if (!$qNum) {
             $dialog = $this->getHelperSet()->get('dialog');
             $qNum = $dialog->ask($output, 'Please enter the question number: ');
         }
-
-        define('phpQ', 'ZCE\\Certifications\\PHP5\\', TRUE);
-        $class = phpQ . "Q$qNum";
-        $qClass = new $class;
         
-        $output->writeln("<info>ZCE:$certsType Question number $qNum</info>");
-        $output->writeln('<comment>' . $qClass->getQuery() . '</comment>');
+        $ns = "ZCE\\Certifications\\$qCert\\";
         
-        foreach ($qClass->getOptions() as $k => $v) {
-            $output->writeln('A) <info>' . $k . '</info>');
+        $class = $ns . "Q$qNum";
+        $qClass = null;
+        
+        if (class_exists($class)) {
+            $qClass = new $class;
         }
         
+        if (is_object($qClass) && $qClass instanceof \ZCE\Certifications\QuestionAbstract) {
+            echo 'ok';
+        } else {
+            $output->writeln('<error>Invalid question number</error>');
+            $this->_getQuestion($input, $output);
+        }
+            
+    }
+            
+
+
+    /**
+     * Executes certification questions
+     * 
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
+    protected function _askQuestion(OutputInterface $output)
+    {
         
+
+        $output->writeln("<info>ZCE:$certsType Question number $qNum</info>");
+        $output->writeln('<comment>' . $qClass->getQuery() . '</comment>');
+
+        $letters = array_slice(range('A', 'Z'), 0, count($qClass->getOptions()));
+        $i = 0;
+        foreach ($qClass->getOptions() as $k => $v) {
+            $output->writeln($letters[$i] . ') <info>' . $k . '</info>');
+            $i++;
+        }
+
+        $dialog = $this->getHelperSet()->get('dialog');
+        $a = $dialog->ask($output, 'Answer: ');
     }
 
 }
