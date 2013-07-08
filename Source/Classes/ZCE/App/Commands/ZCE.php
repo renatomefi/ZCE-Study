@@ -158,7 +158,7 @@ class ZCE extends Command
         $dialog = $this->getHelperSet()->get('dialog');
         $answer = $dialog->ask($output, 'Answer: ', null, $letters);
         
-        $question->isValid($answer, $letters);
+        $question->isValid($answer, $finalOptions, $letters);
     }
     
 

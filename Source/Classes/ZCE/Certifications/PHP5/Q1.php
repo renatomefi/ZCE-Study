@@ -25,13 +25,23 @@ class Q1 extends MultipleChoice
 
     protected function build()
     {
-        $this->setQuery('Quanto é 1+1?');
-        
+        $this->setQuery(
+            '<?php
+            include("xml.inc");
+            if(!$dom = domxml_open_mem($xmlstr)) {
+            echo "Error while parsing the XML document\n";
+            exit;
+            }
+            $a = ***********
+            print_r($a);
+            ?>'
+        );
+
         $this
-                ->addOption('2', true)
-                ->addOption('3', false)
-                ->addOption('4', false)
-                ->addOption('0', false);
+            ->addOption('$dom->root_element();', FALSE)
+            ->addOption('$dom->root_node();', FALSE)
+            ->addOption('$node->parent_node();', FALSE)
+            ->addOption('$dom->document_element();', TRUE);
     }
 
 }

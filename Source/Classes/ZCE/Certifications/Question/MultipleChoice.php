@@ -22,6 +22,7 @@ use ZCE\Certifications\QuestionAbstract;
  */
 abstract class MultipleChoice extends QuestionAbstract
 {
+    
     /**
      * Question options
      * 
@@ -94,6 +95,8 @@ abstract class MultipleChoice extends QuestionAbstract
         $answer = array();
         $invalid = array();
         
+        // Removes anything tha is not alpha
+        // fill an array with valid and invalid chars
         foreach ($aArray as $v) {
             if (ctype_alpha($v)) {
                 if (in_array($v, $filter) || empty($filter)) {
@@ -112,12 +115,20 @@ abstract class MultipleChoice extends QuestionAbstract
      * Optional filter (pre validates)
      * 
      * @param string $answer
+     * @param array $map
      * @param array $filter
      * @return boolean
      */
-    public function isValid($answer, $filter = array())
+    public function isValid($answer, $map = array(), $filter = array())
     {
+        $answerfiltered =  $this->_filterAnswer($answer, $filter);
+        $answerKeys = array_intersect_key(
+            $map, array_flip($answerfiltered['valid'])
+        );
+        
         \Zend\Debug\Debug::dump($this->_filterAnswer($answer, $filter));
+        \Zend\Debug\Debug::dump($map);
+        \Zend\Debug\Debug::dump($answerKeys);
         return true;
     }
 }
