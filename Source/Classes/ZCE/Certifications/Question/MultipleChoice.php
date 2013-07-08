@@ -35,11 +35,17 @@ abstract class MultipleChoice extends QuestionAbstract
      * 
      * @return array
      */
-    public function getOptions()
+    public function getOptions($correct = false)
     {
+        
         $options = array();
+        
+        $i = 0;
         foreach ($this->_options as $o) {
-            $options[] = $o['value'];
+            if (FALSE === $correct || $o['correct'] === true) {
+                $options[$i] = $o['value'];
+            }
+            $i++;
         }
         
         return $options;
@@ -103,7 +109,7 @@ abstract class MultipleChoice extends QuestionAbstract
                     $answer[] = $v;
                 } else {
                     $invalid[] = $v;
-                }
+                }   
             }
         }
         
@@ -126,9 +132,13 @@ abstract class MultipleChoice extends QuestionAbstract
             $map, array_flip($answerfiltered['valid'])
         );
         
-        \Zend\Debug\Debug::dump($this->_filterAnswer($answer, $filter));
-        \Zend\Debug\Debug::dump($map);
-        \Zend\Debug\Debug::dump($answerKeys);
+        $answerCorrect = array_keys($this->getOptions(TRUE));
+        
+        $answerMatch = array_intersect(array_values($answerCorrect), array_values($answerKeys));
+        
+        \Zend\Debug\Debug::dump(array_values($answerCorrect));
+        \Zend\Debug\Debug::dump(array_values($answerKeys));
+        \Zend\Debug\Debug::dump(array_values($answerMatch));
         return true;
     }
 }
