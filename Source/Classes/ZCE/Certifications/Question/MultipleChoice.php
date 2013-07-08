@@ -29,15 +29,27 @@ abstract class MultipleChoice extends QuestionAbstract
      */
     protected $_options;
     
+    /**
+     * Return array of question options
+     * 
+     * @return array
+     */
     public function getOptions()
     {
         $options = array();
         foreach ($this->_options as $o) {
             $options[] = $o['value'];
         }
+        
         return $options;
     }
 
+    /**
+     * Set all options once
+     * 
+     * @param array $options
+     * @throws \Exception
+     */
     protected function setOptions($options)
     {
         if (!is_array($options))
@@ -46,6 +58,14 @@ abstract class MultipleChoice extends QuestionAbstract
         $this->_options = $options;
     }
 
+    /**
+     * Add an option to the question
+     * 
+     * @param string $option
+     * @param bool $correct
+     * @return \ZCE\Certifications\Question\MultipleChoice
+     * @throws \Exception
+     */
     protected function addOption($option, $correct = null)
     {
         if (is_null($correct) || !is_bool($correct))
@@ -58,9 +78,18 @@ abstract class MultipleChoice extends QuestionAbstract
         return $this;
     }
     
-    public function _filterAnswer($a, Array $filter = array())
+    /**
+     * Filter users ansewer for multiple choice
+     * Removes anything but alpha
+     * Also returns an array with invalid options
+     * 
+     * @param string $answer
+     * @param array $filter
+     * @return array
+     */
+    protected function _filterAnswer($answer, Array $filter = array())
     {
-        $aArray = str_split(strtoupper($a));
+        $aArray = str_split(strtoupper($answer));
         
         $answer = array();
         $invalid = array();
@@ -78,9 +107,17 @@ abstract class MultipleChoice extends QuestionAbstract
         return array('valid' => $answer, 'invalid' => $invalid);
     }
     
-    public function isValid($answer)
+    /**
+     * Validates user's answer
+     * Optional filter (pre validates)
+     * 
+     * @param string $answer
+     * @param array $filter
+     * @return boolean
+     */
+    public function isValid($answer, $filter = array())
     {
-        \Zend\Debug\Debug::dump($this->_filterAnswer($answer, $this->getOptions()));
+        \Zend\Debug\Debug::dump($this->_filterAnswer($answer, $filter));
         return true;
     }
 }
