@@ -23,6 +23,10 @@ use ZCE\Certifications\QuestionAbstract;
 abstract class MultipleChoice extends QuestionAbstract
 {
     
+    const ERROR_ONE_CHOICE = 3;
+    const ERROR_INVALID_CHOICE = 4;
+    const CORRECT_PARTIAL = 5;
+    
     /**
      * Question options
      * 
@@ -37,7 +41,6 @@ abstract class MultipleChoice extends QuestionAbstract
      */
     public function getOptions($correct = false)
     {
-        
         $options = array();
         
         $i = 0;
@@ -134,11 +137,54 @@ abstract class MultipleChoice extends QuestionAbstract
         
         $answerCorrect = array_keys($this->getOptions(TRUE));
         
-        $answerMatch = array_intersect(array_values($answerCorrect), array_values($answerKeys));
+        $answerMatch = array_intersect(
+            array_values($answerCorrect), array_values($answerKeys)
+        );
         
-        \Zend\Debug\Debug::dump(array_values($answerCorrect));
-        \Zend\Debug\Debug::dump(array_values($answerKeys));
-        \Zend\Debug\Debug::dump(array_values($answerMatch));
-        return true;
+        $return = array('correct' => FALSE, 'code' => NULL, 'msg' => NULL);
+        
+        if (count($this->getOptions(TRUE)) == 1 && count($answerKeys) > 1) {
+            $return['code'] = self::ERROR_ONE_CHOICE;
+        } elseif (count($this->getOptions(TRUE)) == count($answerMatch)) {
+            if (count($answerKeys = 0)) {
+                $return['correct'] = TRUE;
+                $return['code'] = self::CORRECT;
+            } else {
+                $return['code'] = self::CORRECT_PARTIAL;
+            }
+        } else {
+            $return['code'] = self::ERROR;
+        }
+        
+        $return['msg'] = $this->getMessage($return['code']);
+        
+        return $return;
+    }
+    
+    /**
+     * Return messages based on error code (constants)
+     * 
+     * @param int $errorCode
+     * @return string
+     */
+    public function getMessage($errorCode)
+    {
+        switch ($errorCode) {
+            case self::ERROR:
+                return 'Wrong answer';
+                break;
+            case self::CORRECT:
+                return 'Congratulations';
+                break;
+            case self::ERROR_ONE_CHOICE:
+                return 'Please, choose only one option';
+                break;
+            case self::ERROR_INVALID_CHOICE:
+                return 'Please, choose only the available options';
+                break;
+            case self::CORRECT_PARTIAL:
+                return 'Near! Your have a partial correct answer';
+                break;
+        }
     }
 }

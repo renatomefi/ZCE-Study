@@ -78,8 +78,7 @@ class ZCE extends Command
         if (!$certsType || !in_array($certsType, $certs->toArray())) {
             $dialog = $this->getHelperSet()->get('dialog');
             $certsType = $dialog->ask(
-                $output, "Please, choose a Certification type $certs: ",
-                null, $certs->toArray()
+                    $output, "Please, choose a Certification type $certs: ", null, $certs->toArray()
             );
         }
 
@@ -95,6 +94,7 @@ class ZCE extends Command
                 throw new \Exception('ZF1 certification is under construction');
             }
 
+            $input->setArgument('certification', $certsType);
             return $certsType;
         }
     }
@@ -103,31 +103,28 @@ class ZCE extends Command
     {
         $qCert = $input->getArgument('certification');
         $qNum = $input->getArgument('question');
-        
+
         if (!$qNum) {
             $dialog = $this->getHelperSet()->get('dialog');
             $qNum = $dialog->ask($output, 'Please enter the question number: ');
         }
-        
+
         $ns = "ZCE\\Certifications\\$qCert\\";
-        
+
         $class = $ns . "Q$qNum";
         $qClass = null;
-        
+
         if (class_exists($class)) {
             $qClass = new $class;
         }
-        
+
         if (is_object($qClass) && $qClass instanceof \ZCE\Certifications\QuestionAbstract) {
             $this->_askQuestion($output, $qClass);
         } else {
             $output->writeln('<error>Invalid question number</error>');
             $this->_getQuestion($input, $output);
         }
-            
     }
-            
-
 
     /**
      * Executes certification questions
@@ -139,10 +136,10 @@ class ZCE extends Command
 
         $info = $question->getInfo($question);
         $output->writeln(
-            '<info>ZCE ' . $info['certification'] . 
+            '<info>ZCE ' . $info['certification'] .
             ' Question number ' . $info['question'] . '</info>'
         );
-        
+
         $output->writeln('<comment>' . $question->getQuery() . '</comment>');
 
         // Associate letters and options keys, al   so shows it!
@@ -154,13 +151,19 @@ class ZCE extends Command
             $finalOptions[$letters[$i]] = $k;
             $i++;
         }
-        
-        $dialog = $this->getHelperSet()->get('dialog');
-        $answer = $dialog->ask($output, 'Answer: ', null, $letters);
-        
-        $question->isValid($answer, $finalOptions, $letters);
-    }
-    
 
+        $dialog = $this->getHelperSet()->get('dialog');
+        $answer = $dialog->ask($output, '<question>Answer:</question> ', null, $letters);
+
+        $return = $question->isValid($answer, $finalOptions, $letters);
+        $output->writeln('');
+        if ($return['correct'] == FALSE) {
+            $output->write('<error>Sorry</error>');
+        } else {
+            $output->write('<bg=green>CORRECT</bg=green>');
+        }
+        
+        $output->writeln(' ' . $return['msg']);
+    }
 
 }

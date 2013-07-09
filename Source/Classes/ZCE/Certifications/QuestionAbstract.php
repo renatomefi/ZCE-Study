@@ -21,6 +21,9 @@ namespace ZCE\Certifications;
 abstract class QuestionAbstract
 {
 
+    const CORRECT = 1;
+    const ERROR = 2;
+    
     /**
      * Query text
      * 
@@ -128,4 +131,7 @@ abstract class QuestionAbstract
     abstract public function isValid($answer);
     
     abstract protected function build();
+    
+    abstract protected function getMessage($errorCode);
+    
 }
